@@ -3,6 +3,7 @@ package bargame.Loop;
 import javafx.scene.image.Image;
 
 public enum AnimationSets implements AnimationControls {
+    // rewrite some stuff in here, frame isn't accessible.
     example () {
         public enum frame {
             FRAME1(null),

@@ -266,11 +266,11 @@ public class TimedTextbox extends Textbox {
 
     public void destruct () {
         if (parent instanceof Pane) {
-            ((Pane) parent).getChildren().remove(this.l);
+            ((Pane) parent).getChildren().remove(this);
         }
 
         if (parent instanceof Group) {
-            ((Group) parent).getChildren().remove(this.l);
+            ((Group) parent).getChildren().remove(this);
         }
     }
 

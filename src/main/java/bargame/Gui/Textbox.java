@@ -1,11 +1,12 @@
 package bargame.Gui;
 
-import javafx.scene.control.Label;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
-public class Textbox {
-    String text;
-    Label l = new Label();
+public class Textbox extends TextFlow {
+    String str;
 
     /**
      * Creates a Textbox object that can be used to denote alerts, or NPCs dialogue.
@@ -17,11 +18,7 @@ public class Textbox {
      *                  Color of the background defaults to Transparent.
      */
     public Textbox(String text, String font, double textSize) {
-        this.text = text;
-        l.setText(text);
-        l.setStyle("-fx-font: " + textSize + "px " + font + ";" +
-                "-fx-background-color: " + toHexString(Color.TRANSPARENT));
-        l.setTextFill(Color.BLACK);
+        create(text, font, textSize, Color.BLACK, Color.TRANSPARENT);
     }
 
     /**
@@ -34,11 +31,7 @@ public class Textbox {
      *                  Color of the background defaults to Transparent.
      */
     public Textbox(String text, String font, double textSize, Color textColor) {
-        this.text = text;
-        l.setText(text);
-        l.setStyle("-fx-font: " + textSize + "px " + font + ";" +
-                "-fx-background-color: " + toHexString(Color.TRANSPARENT));
-        l.setTextFill(textColor);
+        create(text, font, textSize, textColor, Color.TRANSPARENT);
     }
 
     /**
@@ -51,21 +44,50 @@ public class Textbox {
      * @param bgColor   Sets the background color of the textbox.
      */
     public Textbox(String text, String font, double textSize, Color textColor, Color bgColor) {
-        this.text = text;
-        l.setText(text);
-        l.setStyle("-fx-font: " + textSize + "px " + font + ";" +
-                "-fx-background-color: " + toHexString(bgColor));
-        l.setTextFill(textColor);
+        create(text, font, textSize, textColor, bgColor);
+    }
+
+    /**
+     * Method that the constructors use to create the text boxes.
+     *
+     * @param text
+     * @param font
+     * @param textSize
+     * @param textColor
+     * @param bgColor
+     */
+    private void create (String text, String font, double textSize, Color textColor, Color bgColor) {
+        String[] words = text.split(" ");
+        for (int a = 0; a < words.length; a++) {
+            Text t;
+            if (a != 0) {
+                t = new Text(" " + words[a]);
+            }
+            else {
+                t = new Text(words[a]);
+            }
+            t.setStyle("-fx-font: " + textSize + "px " + font + ";" +
+                    "-fx-background-color: " + toHexString(bgColor));
+            t.setStroke(textColor);
+            t.setStrokeWidth(0.01);
+            getChildren().add(t);
+        }
+        this.str = text;
     }
 
     /**
      * Change the text of the textbox. does not allow for changes of font.
      *
-     * @param text      The updated text.
+     * @param str      The updated text.
      */
-    public void setText (String text) {
-        this.text = text;
-        l.setText(text);
+    public void setStr(String str) {
+        this.str = str;
+        getChildren().clear();
+        String[] words = str.split(" ");
+        for (String string : words) {
+            Text t = new Text(string);
+            getChildren().add(t);
+        }
     }
 
     /**
@@ -74,7 +96,7 @@ public class Textbox {
      * @param bgColor   The background color to change to.
      */
     public void setBackgroundColor (Color bgColor) {
-        l.setStyle("-fx-background-color: " + toHexString(bgColor));
+        setStyle("-fx-background-color: " + toHexString(bgColor));
     }
 
     /**
@@ -83,16 +105,19 @@ public class Textbox {
      * @param textColor   The background color to change to.
      */
     public void setTextColor (Color textColor) {
-        l.setStyle("-fx-text-fill: " + toHexString(textColor));
+        for (Node n : getChildren()) {
+            n.setStyle("-fx-text-fill: " + toHexString(textColor));
+        }
     }
 
     /**
-     * Returns the Label this class contains.
+     * Sets the width of the TextFlow
      *
-     * @return  Label named l is returned.
+     * @param width     specified width
      */
-    public Label getAlert () {
-        return l;
+    public void setTextBoxWidth(double width) {
+        setMinWidth(width);
+        setPrefWidth(width);
     }
 
 

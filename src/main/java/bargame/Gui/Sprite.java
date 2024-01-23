@@ -7,7 +7,6 @@ import javafx.scene.image.ImageView;
 import java.util.Objects;
 
 public class Sprite extends ImageView {
-    ImageView iv;
 
     /**
      * Creates a sprite object with the image located at the given path.
@@ -16,7 +15,7 @@ public class Sprite extends ImageView {
      * @param path          The relative path starting from the resources folder. example: "/dragon.png"
      */
     public Sprite (String path) {
-        iv = new ImageView(new Image(Objects.requireNonNull(App.class.getResourceAsStream(path))));
+        setImage(new Image(Objects.requireNonNull(App.class.getResourceAsStream(path))));
     }
 
     /**
