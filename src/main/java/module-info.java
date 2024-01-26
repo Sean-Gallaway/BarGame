@@ -5,6 +5,7 @@ module com.example.bargame {
 
     opens bargame to javafx.fxml;
     exports bargame;
+    exports bargame.npc to javafx.fxml;
     exports bargame.Gui;
     opens bargame.Gui to javafx.fxml;
     exports bargame.Loop;

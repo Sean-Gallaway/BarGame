@@ -21,57 +21,20 @@ public class AnimatedSprite extends Sprite implements Animated {
     }
 
     /**
-     * Creates a sprite object with the image located at the given path.
-     * Scale is dictated in the X and Y direction with their given variables.
-     * Defaults to not keeping the aspect ratio.
-     * Defaults to not using smoothing.
+     * Creates a sprite object with the initial image of the first image in a given image set.
      *
-     * @param path   The relative path starting from the resources folder. example: "/dragon.png".
-     * @param scaleX Scale of the resulting Sprite in the X direction.
-     * @param scaleY Scale of the resulting Sprite in the Y direction.
+     * @param set   The animation set we are going to be iterating through when animate() is called.
      */
-    public AnimatedSprite(String path, AnimationSets set, double scaleX, double scaleY) {
-        super(path, scaleX, scaleY);
+    public AnimatedSprite(AnimationSets set) {
+        super(set.getSetImages(0)[0]);
         imageNum = 0;
         images = set.getSetImages(0);
     }
 
     /**
-     * Creates a sprite object with the image located at the given path.
-     * Scale is dictated in the X and Y direction with their given variables.
-     * Specify if ratio for scaling is preserved.
-     * Defaults to not using smoothing.
+     * Override of the animate method inherited from the Animated interface. each time it is called it will set Image of this AnimatedSprite to the next Image in the animation set.
      *
-     * @param path          The relative path starting from the resources folder. example: "/dragon.png".
-     * @param scaleX        Scale of the resulting Sprite in the X direction.
-     * @param scaleY        Scale of the resulting Sprite in the Y direction.
-     * @param preserveRatio Specifier if the aspect ratio of the Image should be kept.
      */
-    public AnimatedSprite(String path, AnimationSets set, double scaleX, double scaleY, boolean preserveRatio) {
-        super(path, scaleX, scaleY, preserveRatio);
-        imageNum = 0;
-        images = set.getSetImages(0);
-    }
-
-    /**
-     * Creates a sprite object with the image located at the given path.
-     * Scale is dictated in the X and Y direction with their given variables.
-     * Specify if ratio for scaling is preserved.
-     * Defaults to not using smoothing.
-     *
-     * @param path          The relative path starting from the resources folder. example: "/dragon.png".
-     * @param scaleX        Scale of the resulting Sprite in the X direction.
-     * @param scaleY        Scale of the resulting Sprite in the Y direction.
-     * @param preserveRatio Specifier if the aspect ratio of the Image should be kept.
-     * @param smooth        Specifier if smoothing is used on the Image or not.
-     */
-    public AnimatedSprite(String path, AnimationSets set, double scaleX, double scaleY, boolean preserveRatio, boolean smooth) {
-        super(path, scaleX, scaleY, preserveRatio, smooth);
-        imageNum = 0;
-        images = set.getSetImages(0);
-    }
-
-
     @Override
     public void animate () {
         if (imageNum < images.length) {
@@ -83,6 +46,11 @@ public class AnimatedSprite extends Sprite implements Animated {
         }
     }
 
+    /**
+     * Checks if we have reached the end of our animation.
+     *
+     * @return self-explanatory
+     */
     @Override
     public boolean endOfLoop() {
         return imageNum == images.length;

@@ -8,8 +8,8 @@ import java.util.Objects;
 
 public enum AnimationSets {
     // rewrite some stuff in here, frame isn't accessible.
-    dragonSet(new Set[]{
-            Set.dragon
+    DRAGON_SET(new Set[]{
+            Set.DRAGON
     });
 
     Set[] Sets;
@@ -30,7 +30,7 @@ public enum AnimationSets {
 
 enum Set {
     // all animation sets get placed into here. this enum may also be used for holding images that may or may not necessarily be animated.
-    dragon("/dragonIdle/dragon_idle_", 13);
+    DRAGON("/dragonIdle/dragon_idle_", 13);
 
     Image[] images;
     Set(String path, int frameCount) {

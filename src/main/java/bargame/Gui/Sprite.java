@@ -1,15 +1,12 @@
 package bargame.Gui;
 
 import bargame.App;
-import bargame.Loop.AnimationSets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.Objects;
 
 public class Sprite extends ImageView {
-    Image[] frames;
-    int frame;
 
     /**
      * Creates a sprite object with the image located at the given path.
@@ -19,6 +16,15 @@ public class Sprite extends ImageView {
      */
     public Sprite (String path) {
         setImage(new Image(Objects.requireNonNull(App.class.getResourceAsStream(path))));
+    }
+
+    /**
+     * Creates a sprite object with the given image. used primarily by the AnimatedSprite class.
+     *
+     * @param img          The given Image for this Sprite.
+     */
+    public Sprite (Image img) {
+        setImage(img);
     }
 
     /**
@@ -64,13 +70,5 @@ public class Sprite extends ImageView {
      */
     public Sprite (String path, double scaleX, double scaleY, boolean preserveRatio, boolean smooth) {
         setImage(new Image(Objects.requireNonNull(App.class.getResourceAsStream(path)), scaleX, scaleY, preserveRatio, smooth));
-    }
-
-    public void setAnimation (AnimationSets set) {
-
-    }
-
-    public void animate () {
-
     }
 }

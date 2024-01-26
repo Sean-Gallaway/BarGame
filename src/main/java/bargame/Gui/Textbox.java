@@ -1,12 +1,20 @@
 package bargame.Gui;
 
+import bargame.npc.Dialogue;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 public class Textbox extends TextFlow {
+    String[] dialogue;
+    int dialogueIndex = 0;
     String str;
+    Color bgColor, textColor;
+    double textSize;
+    String font;
 
     /**
      * Creates a Textbox object that can be used to denote alerts, or NPCs dialogue.
@@ -50,13 +58,17 @@ public class Textbox extends TextFlow {
     /**
      * Method that the constructors use to create the text boxes.
      *
-     * @param text
-     * @param font
-     * @param textSize
-     * @param textColor
-     * @param bgColor
+     * @param text      The text you want to be contained in the text box.
+     * @param font      The font of the text box. If a font cannot be found, it will default to Arial. This is dictated by .setStyle rather than this program, and does not throw an error if this is to happen.
+     * @param textSize  Text size of the Textbox object.
+     * @param textColor Sets the text color of the textbox.
+     * @param bgColor   Sets the background color of the textbox.
      */
     private void create (String text, String font, double textSize, Color textColor, Color bgColor) {
+        this.bgColor = bgColor;
+        this.textColor = textColor;
+        this.textSize = textSize;
+        this.font = font;
         String[] words = text.split(" ");
         for (int a = 0; a < words.length; a++) {
             Text t;
@@ -85,7 +97,11 @@ public class Textbox extends TextFlow {
         getChildren().clear();
         String[] words = str.split(" ");
         for (String string : words) {
-            Text t = new Text(string);
+            Text t = new Text(string + " ");
+            t.setStyle("-fx-font: " + textSize + "px " + font + ";" +
+                    "-fx-background-color: " + toHexString(bgColor) + ";");
+            t.setStroke(textColor);
+            t.setStrokeWidth(0.01);
             getChildren().add(t);
         }
     }
@@ -118,6 +134,30 @@ public class Textbox extends TextFlow {
     public void setTextBoxWidth(double width) {
         setMinWidth(width);
         setPrefWidth(width);
+    }
+
+    public void nextText () {
+        dialogueIndex++;
+        if (dialogueIndex < dialogue.length) {
+            setStr(dialogue[dialogueIndex]);
+        }
+        else {
+            ((Pane) this.getParent()).getChildren().remove(this);
+        }
+    }
+
+    public void nextText (AnchoredTextBox atb) {
+        nextText();
+        if (dialogueIndex >= dialogue.length) {
+//            System.out.println(App.worldScene.getChildren().remove(atb));
+//            for (Node child : App.worldScene.getChildren()) {
+//                System.out.println(child.getClass());
+//            }
+            if (atb.getParent().getClass().equals(Group.class)) {
+                ((Group) atb.getParent()).getChildren().remove(atb);
+                atb.progressDialogue(Dialogue.Dragon);
+            }
+        }
     }
 
 
