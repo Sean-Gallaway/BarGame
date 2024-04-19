@@ -1,11 +1,16 @@
 package bargame.Gui;
 
 import bargame.Loop.AnimationSets;
+import bargame.Loop.Motion.Coord;
+import bargame.Loop.Cycle;
+import bargame.Loop.Motion.Path;
+import bargame.Loop.Motion.Segment;
 import javafx.scene.image.Image;
 
 public class AnimatedSprite extends Sprite implements Animated {
     int imageNum;
     Image[] images;
+    Path path;
 
     /**
      * Creates a sprite object with the image located at the given path.
@@ -54,5 +59,12 @@ public class AnimatedSprite extends Sprite implements Animated {
     @Override
     public boolean endOfLoop() {
         return imageNum == images.length;
+    }
+
+    public void addPath (Cycle animationCycle, Segment[] segments, int stepCount) {
+        if (path != null) {
+            path = null;
+        }
+        path = new Path(this, animationCycle, segments, stepCount);
     }
 }

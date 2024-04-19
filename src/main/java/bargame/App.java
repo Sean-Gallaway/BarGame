@@ -1,10 +1,9 @@
 package bargame;
 
 import bargame.Gui.*;
-import bargame.Loop.AnimationSets;
-import bargame.Loop.AnimationThread;
-import bargame.Loop.FPS;
-import bargame.Loop.Update;
+import bargame.Loop.*;
+import bargame.Loop.Motion.Coord;
+import bargame.Loop.Motion.Segment;
 import bargame.npc.Dialogue;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -33,9 +32,17 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
 
+        Cycle c = new Cycle(FPS.SIXTY);
+        c.start();
 
         InteractibleAnimatedSprite ias = new InteractibleAnimatedSprite("/dragon.png", AnimationSets.DRAGON_SET, Dialogue.Dragon);
         worldScene.getChildren().add(ias);
+        ias.addPath(c, new Segment[]{
+                new Segment(100, 0, 200, 100),
+                new Segment(200, 100, 100, 200)},
+                100
+        );
+
 //        AnchoredTextBox atb = new AnchoredTextBox(Dialogue.Dragon, "Calibri", 20, false, 200);
 //        worldScene.getChildren().add(atb);
 
@@ -44,8 +51,8 @@ public class App extends Application {
         at.start();
 
 
-        //AnchoredTextBox atb = new AnchoredTextBox("/dragon.png", d, "Calibri", 40, false, 175);
-        //worldScene.getChildren().add(atb);
+//        AnchoredTextBox atb = new AnchoredTextBox("/dragon.png", Dialogue.Dragon, "Calibri", 40, false, 175);
+//        worldScene.getChildren().add(atb);
 
         //Update update = new Update(FPS.FIVE);
         //update.start();

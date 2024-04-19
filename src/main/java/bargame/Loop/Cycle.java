@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Cycle extends AnimationTimer {
     private long lastUpdate;
-    private final long framerate;
+    private final long frameRate;
     private boolean loop = true, running;
     private ArrayList<Animated> subjects = new ArrayList<>();
     private final FPS fps;
@@ -19,7 +19,7 @@ public class Cycle extends AnimationTimer {
         lastUpdate = 0;
         this.fps = fps;
         running = false;
-        framerate = fps.getValue();
+        frameRate = fps.getValue();
     }
 
     /**
@@ -31,7 +31,7 @@ public class Cycle extends AnimationTimer {
         this.fps = fps;
         this.loop = loop;
         running = false;
-        framerate = fps.getValue();
+        frameRate = fps.getValue();
     }
 
     /**
@@ -55,7 +55,7 @@ public class Cycle extends AnimationTimer {
     }
 
     /**
-     * Override of the handle method. during the specified framerate, loop over the subjects of this Cycle object and call the animate method.
+     * Override of the handle method. during the specified frame rate, loop over the subjects of this Cycle object and call the animate method.
      *
      * @param now
      *            The timestamp of the current frame given in nanoseconds. This
@@ -64,7 +64,7 @@ public class Cycle extends AnimationTimer {
      */
     @Override
     public void handle(long now) {
-        if (now - lastUpdate >= framerate) {
+        if (now - lastUpdate >= frameRate) {
             if (subjects.isEmpty()) {
                 stop();
             }

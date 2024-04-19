@@ -10,4 +10,6 @@ module com.example.bargame {
     opens bargame.Gui to javafx.fxml;
     exports bargame.Loop;
     opens bargame.Loop to javafx.fxml;
+    exports bargame.Loop.Motion;
+    opens bargame.Loop.Motion to javafx.fxml;
 }
